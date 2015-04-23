@@ -28,8 +28,8 @@ foreach(@files){
     } 
   }
   for my $key (sort {$a<=>$b} keys %depths){
-    print OUT ("Sample_$key,",join(",",@{$depths{$key}}),"\n");
+    print OUT ("Sample_$key_$_,",join(",",@{$depths{$key}}),"\n");
   }
-  close OUT;
   close IN;
 }
+close OUT;

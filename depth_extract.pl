@@ -3,22 +3,21 @@
 ####This script takes in a VCF file
 use strict;
 #use warnings;
-print "At LEAST IT FUCKING STARTED";
+print "At LEAST IT FUCKING STARTED\n";
 $| = 1;
-opendir my $dir, "/group/palmer-lab/Rats/SD/GBS/vars_" or die "Cannot open directory: $!";
-print "I DID IT!";
+opendir my $dir, "/group/palmer-lab/Rats/SD/GBS/vars" or die "Cannot open directory: $!";
 my @files = grep(/vcf$/,readdir($dir));
-print join(" ",@files);
+print join("\n",@files);
 closedir $dir;
 
 open OUT, ">depths.txt" or die;
 my %depths = ();
 my $key;
 
-foreach(@files){
+foreach my $file (@files){
   my @depth;
 
-  open IN, "/group/palmer-lab/Rats/SD/GBS/vars_/$_" or die;
+  open IN, "/group/palmer-lab/Rats/SD/GBS/vars/$file" or die;
 
   while (<IN>){
     next if /^\#/;
@@ -30,11 +29,10 @@ foreach(@files){
       push (@{$depths{$i}}, $depth[2]);
     } 
   }
-  close IN;
-  print "Made it out of the reading";	
+  close IN;	
   for my $key (sort {$a<=>$b} keys %depths){
-    print OUT ("Sample-$key-$_,",join(",",@{$depths{$key}}),"\n");
+    print OUT ("Sample-$key-$file,",join(",",@{$depths{$key}}),"\n");
   }
-  print "$_ finished printing";
+  print "$file finished printing.\n";
 }
 close OUT;

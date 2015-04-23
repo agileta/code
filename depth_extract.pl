@@ -4,7 +4,7 @@
 use strict;
 #use warnings;
 
-opendir my $dir, "/group/palmer-lab/Rats/SD/GBS/vars_" or die "Cannot open directory: $!";
+opendir my $dir, "/group/palmer-lab/Rats/SD/GBS/vars" or die "Cannot open directory: $!";
 @files = grep(/vcf$/,readdir($dir));
 print join(" ",@files);
 closedir $dir;
